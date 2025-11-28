@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="免费在线 SVG 优化和压缩工具。支持 SVG 格式化、压缩、优化路径、移除冗余代码等功能，大幅减小 SVG 文件大小，所有数据在本地处理，安全可靠。" />
+    <meta name="keywords" content="SVG优化,SVG压缩,SVG格式化,在线SVG工具,矢量图优化,文件大小优化,SVGOMG,SVGO" />
+    <meta name="author" content="YYSC资源导航" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="theme-color" content="#667eea" />
+    
+    <title>SVG 优化工具 - 免费在线 SVG 优化与压缩工具</title>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "SVG 优化工具",
+        "description": "免费在线 SVG 优化和压缩工具。支持 SVG 格式化、压缩、优化路径、移除冗余代码等功能，大幅减小 SVG 文件大小，所有数据在本地处理，安全可靠。",
+        "url": "https://example.com/svg-optimizer.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "CNY"
+        },
+        "featureList": [
+            "SVG 格式化",
+            "SVG 压缩",
+            "路径优化",
+            "移除冗余代码",
+            "智能 ID 清理",
+            "样式优化",
+            "可视化对比",
+            "本地处理，安全可靠"
+        ],
+        "publisher": {
+            "@type": "Organization",
+            "name": "YYSC资源导航"
+        }
+    }
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzY2N2VlYSI+PHBhdGggZD0iTTEyIDJDNi40OCA MiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0zLjUgMTJsLTYgMy41di03TDkuNSAxMC41IDE1LjUgMTR6bS0zLjUtMS42N2wtLjcxLS40MS0yLjggMS42MyAyLjggMS42My43MS0uNDF2LS44MXptLTYtMy41djdsNi0zLjVWOC4zM2wtNiAzLjV6bTAtMWwyLjguNDVWNy4yOEw2IDguNjZ6bTYuNSAyLjE3bC43MS40MXYyLjgybC0yLjgtMS42Mi0uNzEtLjQxVjEzLjVMMTIuNSAxMC44M3ptNi41IDMuNWwtNi0zLjV2Ny4wMWwyLjgtMS42My43MS0uNDFMMTkgMTR6bTAtMWwtMi44LS40di0yLjgyTDkgMTAuNWwyLjggMS42Mi43MS40MUwxOSA5LjY2ek0xMiA0LjQ1bDIuOCAxLjYyLTEuNzUuOTktMi44LS45OS0uMDQtLjA0IDEuNzktMS4wMnoiLz48L3N2Zz4=">
+    
+    <!-- 
+    ============================================
+    Embedded CSS for Core Functionality
+    ============================================
+    -->
+    <style>
+/* General Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+    line-height: 1.6;
+    position: relative;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+header p {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+/* Main Content Layout */
+.main-content {
+    display: grid;
+    grid-template-columns: 320px 1fr; /* Sidebar fixed width, content flexible */
+    gap: 0;
+    min-height: 600px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1024px) {
+    body {
+        padding: 10px;
+    }
+    
+    .main-content {
+        grid-template-columns: 1fr; /* Stack sidebar and content */
+    }
+    .sidebar {
+        border-right: none;
+        border-bottom: 2px solid #e1e8ed;
+        max-height: unset; /* Allow sidebar to expand */
+        position: static; /* Remove sticky position on smaller screens */
+    }
+    .content-area {
+        padding: 20px; /* Reduce padding */
+    }
+}
+
+@media (max-width: 768px) {
+    .preview-container {
+        grid-template-columns: 1fr; /* Stack preview boxes */
+    }
+    header h1 {
+        font-size: 2em;
+    }
+    header p {
+        font-size: 1em;
+    }
+    .container {
+        border-radius: 0; /* No border-radius on very small screens */
+        box-shadow: none;
+    }
+    body {
+        padding: 0; /* No padding on body */
+    }
+}
+
+/* Sidebar */
+.sidebar {
+    background: #f7f9fc;
+    border-right: 2px solid #e1e8ed;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 180px); /* Adjust based on header height, for sticky behavior */
+    position: sticky;
+    top: 0;
+    align-self: start; /* Ensures sticky behavior starts from the top of its grid area */
+}
+
+/* Content Area */
+.content-area {
+    padding: 30px;
+}
+
+/* Upload Zone */
+.upload-zone {
+    border: 3px dashed #667eea;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    background: #f7f9fc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+}
+
+.upload-zone:hover {
+    background: #eef2ff;
+    border-color: #764ba2;
+}
+
+.upload-zone.dragover {
+    background: #e0e7ff;
+    border-color: #4c1d95;
+}
+
+.upload-icon {
+    font-size: 4em;
+    margin-bottom: 15px;
+    color: #667eea;
+}
+
+.upload-zone h3 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.upload-zone p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Preview Container */
+.preview-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.preview-box {
+    border: 2px solid #e1e8ed;
+    border-radius: 12px;
+    padding: 20px;
+    background: #f9fafb;
+    display: flex;
+    flex-direction: column;
+}
+
+.preview-box h3 {
+    color: #333;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3em;
+}
+
+.preview-box .size-badge {
+    font-size: 0.85em;
+    padding: 5px 12px;
+    background: #667eea;
+    color: white;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.preview-box .size-badge.optimized {
+    background: #10b981;
+}
+
+.svg-preview {
+    width: 100%;
+    min-height: 250px;
+    height: 100%; /* Ensure it fills parent height */
+    background: white;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Prevent SVG content from overflowing this box */
+    margin-bottom: 15px;
+    flex-grow: 1; /* Allow preview to grow */
+}
+
+/* For image-based SVG preview */
+.svg-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Ensures the entire image is visible within the container */
+}
+
+/* Statistics Section */
+.stats {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 2px solid #e1e8ed;
+}
+
+.stats h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    border-bottom: 1px solid #e1e8ed;
+    padding-bottom: 10px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 1.1em;
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    color: #666;
+}
+
+.stat-value {
+    color: #333;
+    font-weight: 600;
+}
+
+.stat-value.positive {
+    color: #10b981;
+}
+
+/* Options Sidebar Sections */
+.options-section {
+    margin-bottom: 25px;
+    border-bottom: 1px dashed #e1e8ed;
+    padding-bottom: 20px;
+}
+
+.options-section:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.options-section h3 {
+    color: #333;
+    margin-bottom: 12px;
+    font-size: 1em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #f0f0f0;
+}
+
+.option-item:hover {
+    background: #eef2ff;
+    border-color: #c9d7ff;
+}
+
+.option-item label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    flex: 1;
+    font-size: 0.95em;
+    color: #333;
+}
+
+.option-item input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    transition: background-color 0.2s, border-color 0.2s;
+    flex-shrink: 0; /* Prevent checkbox from shrinking */
+}
+
+.option-item input[type="checkbox"]:checked {
+    background-color: #667eea;
+    border-color: #667eea;
+}
+
+.option-item input[type="checkbox"]:checked::before {
+    content: '✓';
+    display: block;
+    color: white;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+}
+
+.option-item input[type="number"] {
+    width: 70px;
+    padding: 5px 8px;
+    border: 1px solid #e1e8ed;
+    border-radius: 6px;
+    font-size: 0.9em;
+    text-align: center;
+    transition: border-color 0.2s;
+}
+
+.option-item input[type="number"]:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.precision-option {
+    background: #f0f4ff;
+    border-color: #c9d7ff;
+    font-weight: 500;
+}
+.precision-option label {
+    color: #444;
+}
+
+/* Action Buttons */
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.action-btn:last-child {
+    margin-right: 0;
+}
+
+.primary-btn {
+    background: #667eea;
+    color: white;
+}
+
+.primary-btn:hover {
+    background: #5a6edb;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.secondary-btn {
+    background: #e1e8ed;
+    color: #333;
+}
+
+.secondary-btn:hover {
+    background: #d4dde5;
+    box-shadow: 0 4px 15px rgba(170, 180, 190, 0.3);
+}
+
+.reset-btn {
+    background: #fca5a5;
+    color: #7f1d1d;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.reset-btn:hover {
+    background: #ef4444;
+    color: white;
+}
+
+.action-buttons {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* Notification Pop-up */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s ease, bottom 0.3s ease;
+    z-index: 1000;
+    font-size: 0.95em;
+    pointer-events: none; /* Allow clicks to pass through */
+}
+
+.notification.show {
+    opacity: 1;
+    bottom: 30px;
+}
+
+/* Code Editor Styles */
+.code-editor-container {
+    margin-top: 20px;
+    background: #282c34;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid #e1e8ed;
+}
+
+.code-tabs {
+    display: flex;
+    border-bottom: 1px solid #444;
+}
+
+.code-tab {
+    background: #3c4048;
+    color: #ccc;
+    padding: 10px 20px;
+    border: none;
+    border-right: 1px solid #444;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background-color 0.2s, color 0.2s;
+    flex-grow: 1; /* Distribute tabs evenly */
+    text-align: center;
+}
+
+.code-tab:last-child {
+    border-right: none;
+}
+
+.code-tab.active {
+    background: #282c34;
+    color: #fff;
+    font-weight: 600;
+}
+
+.code-editor-wrapper {
+    position: relative;
+    height: 400px; /* Fixed height for code editors */
+}
+
+.code-editor {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #282c34;
+    color: #f8f8f2;
+    padding: 20px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 0.9em;
+    line-height: 1.5;
+    resize: none;
+    overflow: auto;
+    white-space: pre;
+    box-sizing: border-box;
+    position: absolute; /* Stack textareas */
+    top: 0;
+    left: 0;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 SVG 优化工具</h1>
+            <p>强大的 SVG 优化与压缩工具</p>
+        </header>
+
+        <div class="main-content">
+            <!-- 侧边栏 - 优化选项 -->
+            <aside class="sidebar">
+                <div class="options-section">
+                    <h3>🔧 基础优化</h3>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="removeDoctype" checked>
+                            移除 DOCTYPE 声明
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="removeXMLProcInst" checked>
+                            移除 XML 处理指令
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="removeComments" checked>
+                            移除注释
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="removeMetadata" checked>
+                            移除元数据
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="removeEditorsNSData" checked>
+                            移除编辑器命名空间
+                        </label>
+                    </div>
+                </div>
+
+                <div class="options-section">
+                    <h3>✨ 高级优化</h3>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="removeEmptyAttrs" checked>
+                            移除空属性
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="removeHiddenElems" checked>
+                            移除隐藏元素
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="removeEmptyContainers" checked>
+                            移除空容器
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="cleanupIDs" checked>
+                            清理 ID
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="removeUselessDefs" checked>
+                            移除无用定义
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="cleanupNumericValues" checked>
+                            清理数字值 (例如: 1.0 -> 1)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="options-section">
+                    <h3>📐 路径优化</h3>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="convertPathData" checked>
+                            优化路径数据
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="convertShapeToPath">
+                            转换形状为路径
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="mergePaths" checked>
+                            合并路径
+                        </label>
+                    </div>
+                    <div class="option-item precision-option">
+                        <label>
+                            精度控制
+                        </label>
+                        <input type="number" id="precision" min="0" max="10" value="3">
+                    </div>
+                </div>
+
+                <div class="options-section">
+                    <h3>🎨 样式优化</h3>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="removeUnusedNS" checked>
+                            移除未使用的命名空间
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="cleanupAttrs" checked>
+                            清理属性
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="minifyStyles" checked>
+                            压缩样式
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="removeStyleElement">
+                            移除 style 元素
+                        </label>
+                    </div>
+                </div>
+
+                <div class="options-section">
+                    <h3>📝 输出格式</h3>
+                    <div class="option-item">
+                        <label>
+                            <input type="checkbox" id="prettyPrint">
+                            格式化输出（便于阅读，会增加文件大小）
+                        </label>
+                    </div>
+                </div>
+
+                <button class="reset-btn" id="resetOptions">
+                    🔄 重置选项
+                </button>
+            </aside>
+
+            <!-- 主内容区 -->
+            <main class="content-area">
+                <!-- 上传区域 -->
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">📁</div>
+                    <h3>拖放 SVG 文件到此处</h3>
+                    <p>或点击选择文件</p>
+                    <input type="file" id="fileInput" accept=".svg,image/svg+xml" class="hidden">
+                </div>
+
+                <!-- 统计信息 -->
+                <div class="stats hidden" id="stats">
+                    <h3>📊 优化统计</h3>
+                    <div class="stat-item">
+                        <span class="stat-label">原始大小</span>
+                        <span class="stat-value" id="originalSize">0 KB</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">优化后大小</span>
+                        <span class="stat-value positive" id="optimizedSize">0 KB</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">节省空间</span>
+                        <span class="stat-value positive" id="savedSize">0 KB (0%)</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">处理时间</span>
+                        <span class="stat-value" id="processTime">0 ms</span>
+                    </div>
+                </div>
+
+                <!-- 预览区域 -->
+                <div class="preview-container hidden" id="previewContainer">
+                    <div class="preview-box">
+                        <h3>
+                            原始 SVG
+                            <span class="size-badge" id="originalBadge">0 KB</span>
+                        </h3>
+                        <div class="svg-preview" id="originalPreview"></div>
+                        <button class="action-btn secondary-btn" id="copyOriginal">
+                            📋 复制原始代码
+                        </button>
+                    </div>
+
+                    <div class="preview-box">
+                        <h3>
+                            优化后 SVG
+                            <span class="size-badge optimized" id="optimizedBadge">0 KB</span>
+                        </h3>
+                        <div class="svg-preview" id="optimizedPreview"></div>
+                        <button class="action-btn primary-btn" id="copyOptimized">
+                            📋 复制优化代码
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 代码编辑器 -->
+                <div class="code-editor-container hidden" id="codeEditorContainer">
+                    <div class="code-tabs">
+                        <button class="code-tab active" data-tab="original">原始代码</button>
+                        <button class="code-tab" data-tab="optimized">优化代码</button>
+                    </div>
+                    <div class="code-editor-wrapper">
+                        <textarea class="code-editor" id="originalCode" readonly></textarea>
+                        <textarea class="code-editor hidden" id="optimizedCode" readonly></textarea>
+                    </div>
+                </div>
+
+                <!-- 操作按钮 -->
+                <div class="action-buttons hidden" id="actionButtons">
+                    <button class="action-btn primary-btn" id="downloadOptimized">
+                        ⬇️ 下载优化后的 SVG
+                    </button>
+                    <button class="action-btn secondary-btn" id="downloadOriginal">
+                        ⬇️ 下载原始 SVG
+                    </button>
+                    <button class="action-btn secondary-btn" id="loadNew">
+                        🔄 加载新文件
+                    </button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 通知提示 -->
+    <div class="notification hidden" id="notification">
+        <span id="notificationText"></span>
+    </div>
+
+    <!-- 
+    ============================================
+    Embedded JavaScript for Core Functionality
+    ============================================
+    -->
+    <!-- SVGO Library from CDN - This is required for the tool to work -->
+    <script src="https://unpkg.com/svgo@3.3.2/dist/svgo.browser.js" 
+            onerror="console.warn('SVGO 3.3.2 加载失败，尝试其他版本')"></script>
+    <script>
+        // 检查 SVGO 是否加载成功
+        if (typeof SVGO === 'undefined') {
+            console.warn('SVGO 未加载，将使用增强的模拟优化函数');
+        }
+    </script>
+    
+    <script>
+// script.js
+
+// ⚠️ 安全考虑：直接将用户提供的 SVG 作为 innerHTML 插入 DOM 存在潜在的 XSS 风险。
+//    为提高安全性，这里在预览时使用 `<img>` 标签结合 Data URI。
+//    这能有效隔离潜在的恶意脚本，但会失去 SVG 的交互性。
+//    如果需要交互式预览，可以考虑沙盒 iframe。
+
+// 检查 SVGO 是否已全局可用
+// SVGO 不同版本的浏览器 API 可能不同
+let SVGO_optimize = null;
+let SVGO_loaded = false;
+
+// 等待 DOM 加载完成后再检查 SVGO
+function initSVGO() {
+    if (typeof SVGO !== 'undefined') {
+        // SVGO 3.x API: SVGO.optimize(svgString, config)
+        if (typeof SVGO.optimize === 'function') {
+            SVGO_optimize = SVGO.optimize.bind(SVGO);
+            SVGO_loaded = true;
+            console.log('✓ SVGO 已加载（版本 3.x）');
+        }
+        // SVGO 2.x 或其他格式
+        else if (typeof SVGO.default !== 'undefined') {
+            if (typeof SVGO.default.optimize === 'function') {
+                SVGO_optimize = SVGO.default.optimize.bind(SVGO.default);
+                SVGO_loaded = true;
+                console.log('✓ SVGO 已加载（default export）');
+            }
+        }
+        // 尝试创建实例
+        else if (typeof SVGO === 'function') {
+            try {
+                const svgoInstance = new SVGO({});
+                if (typeof svgoInstance.optimize === 'function') {
+                    SVGO_optimize = svgoInstance.optimize.bind(svgoInstance);
+                    SVGO_loaded = true;
+                    console.log('✓ SVGO 已加载（实例化）');
+                }
+            } catch (e) {
+                console.warn('SVGO 实例化失败:', e);
+            }
+        }
+    }
+
+    // 如果 SVGO 未加载，使用增强的模拟优化函数
+    if (!SVGO_optimize) {
+        console.warn('⚠ SVGO 未加载，将使用增强的模拟优化函数（压缩率可能较低）');
+        SVGO_optimize = mockOptimize;
+    }
+}
+
+// 立即尝试初始化（如果 SVGO 已加载）
+initSVGO();
+
+// 如果未加载，等待一段时间后重试（给 CDN 加载时间）
+if (!SVGO_loaded) {
+    setTimeout(initSVGO, 500);
+    setTimeout(initSVGO, 2000);
+}
+
+// --- DOM 元素引用 ---
+const uploadZone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+const originalPreview = document.getElementById('originalPreview'); // Changed to container for <img>
+const optimizedPreview = document.getElementById('optimizedPreview'); // Changed to container for <img>
+const originalCode = document.getElementById('originalCode');
+const optimizedCode = document.getElementById('optimizedCode');
+const statsSection = document.getElementById('stats');
+const originalSizeSpan = document.getElementById('originalSize');
+const optimizedSizeSpan = document.getElementById('optimizedSize');
+const savedSizeSpan = document.getElementById('savedSize');
+const processTimeSpan = document.getElementById('processTime');
+const previewContainer = document.getElementById('previewContainer');
+const codeEditorContainer = document.getElementById('codeEditorContainer');
+const actionButtons = document.getElementById('actionButtons');
+const originalBadge = document.getElementById('originalBadge');
+const optimizedBadge = document.getElementById('optimizedBadge');
+const downloadOptimizedBtn = document.getElementById('downloadOptimized');
+const downloadOriginalBtn = document.getElementById('downloadOriginal');
+const copyOptimizedBtn = document.getElementById('copyOptimized');
+const copyOriginalBtn = document.getElementById('copyOriginal'); // 已修复
+const loadNewBtn = document.getElementById('loadNew');
+const notification = document.getElementById('notification');
+const notificationText = document.getElementById('notificationText');
+const resetOptionsBtn = document.getElementById('resetOptions');
+const codeTabs = document.querySelectorAll('.code-tab');
+
+// --- 状态变量 ---
+let originalSvgString = '';
+let optimizedSvgString = '';
+let fileName = 'optimized.svg';
+
+// 默认优化选项，匹配 UI 上的复选框 ID
+const defaultPlugins = {
+    // 基础优化
+    removeDoctype: true,
+    removeXMLProcInst: true,
+    removeComments: true,
+    removeMetadata: true,
+    removeEditorsNSData: true,
+
+    // 高级优化
+    removeEmptyAttrs: true,
+    removeHiddenElems: true,
+    removeEmptyContainers: true,
+    cleanupIDs: true,
+    removeUselessDefs: true,
+    cleanupNumericValues: true, // 关键更新：新增清理数字值选项的默认状态
+
+    // 路径优化
+    convertPathData: true,
+    convertShapeToPath: false,
+    mergePaths: true,
+    precision: 3, // 这是一个特殊选项，影响 convertPathData 和 cleanupNumericValues
+
+    // 样式优化
+    removeUnusedNS: true,
+    cleanupAttrs: true,
+    minifyStyles: true,
+    removeStyleElement: false,
+
+    // 输出格式
+    prettyPrint: false, // 是否格式化输出（便于阅读）
+};
+
+let currentOptions = { ...defaultPlugins };
+
+// --- 辅助函数 ---
+
+// 增强的模拟 SVGO 优化函数（当真实 SVGO 未加载时使用）
+function mockOptimize(svgString, config) {
+    let optimizedSvg = svgString;
+    const precision = config.floatPrecision || 3;
+
+    // 获取启用的插件列表
+    const plugins = config.plugins || [];
+    const activePlugins = new Set(plugins.map(p => p.name || p));
+    
+    const getPluginParams = (name) => {
+        const plugin = plugins.find(p => (p.name || p) === name);
+        return plugin && plugin.params ? plugin.params : {};
+    };
+
+    // 1. 移除注释（高优先级，通常能减少很多空间）
+    if (activePlugins.has('removeComments')) {
+        optimizedSvg = optimizedSvg.replace(/<!--[\s\S]*?-->/g, '');
+    }
+
+    // 2. 移除 DOCTYPE
+    if (activePlugins.has('removeDoctype')) {
+        optimizedSvg = optimizedSvg.replace(/<!DOCTYPE[\s\S]*?>/gi, '');
+    }
+
+    // 3. 移除 XML 处理指令
+    if (activePlugins.has('removeXMLProcInst')) {
+        optimizedSvg = optimizedSvg.replace(/<\?xml[\s\S]*?\?>/gi, '');
+    }
+    
+    // 3.5. 移除 SVG version 属性（默认值，不需要）
+    optimizedSvg = optimizedSvg.replace(/\s+version\s*=\s*["']1\.1["']/gi, '');
+    
+    // 3.6. 移除未使用的命名空间（如 xlink，如果没有使用）
+    if (activePlugins.has('removeUnusedNS')) {
+        // 检查是否使用了 xlink
+        const hasXlinkUsage = /xlink:/i.test(optimizedSvg.replace(/xmlns:xlink[^>]*/gi, ''));
+        if (!hasXlinkUsage) {
+            optimizedSvg = optimizedSvg.replace(/\s+xmlns:xlink\s*=\s*["'][^"']*["']/gi, '');
+        }
+    }
+
+    // 4. 移除元数据（metadata 标签）
+    if (activePlugins.has('removeMetadata')) {
+        optimizedSvg = optimizedSvg.replace(/<metadata[\s\S]*?<\/metadata>/gi, '');
+    }
+    
+    // 4.5. 移除 title 和 desc（可选，如果不需要 SEO）
+    // 注意：这里不移除，因为可能对 SEO 有用
+    // 如果需要移除，可以添加选项
+
+    // 5. 移除编辑器命名空间数据
+    if (activePlugins.has('removeEditorsNSData')) {
+        optimizedSvg = optimizedSvg.replace(/\sxmlns:(?:sodipodi|inkscape|adobe|sketch|ai|corel|illustrator)="[^"]*"/gi, '');
+    }
+
+    // 6. 移除空属性
+    if (activePlugins.has('removeEmptyAttrs')) {
+        optimizedSvg = optimizedSvg.replace(/\s+[a-zA-Z-]+="\s*"/g, '');
+        optimizedSvg = optimizedSvg.replace(/\s+[a-zA-Z-]+='\s*'/g, '');
+    }
+
+    // 7. 移除隐藏元素（display:none 或 visibility:hidden）
+    if (activePlugins.has('removeHiddenElems')) {
+        optimizedSvg = optimizedSvg.replace(/<[^>]+\s(?:display|visibility)\s*=\s*["'](?:none|hidden)["'][^>]*>[\s\S]*?<\/[^>]+>/gi, '');
+    }
+
+    // 8. 移除空容器
+    if (activePlugins.has('removeEmptyContainers')) {
+        // 多次处理以移除嵌套的空容器
+        let previousLength = 0;
+        while (previousLength !== optimizedSvg.length) {
+            previousLength = optimizedSvg.length;
+            optimizedSvg = optimizedSvg.replace(/<g[^>]*>\s*<\/g>/gi, '');
+            optimizedSvg = optimizedSvg.replace(/<g[^>]*>\s*<g[^>]*>\s*<\/g>\s*<\/g>/gi, ''); // 嵌套空容器
+        }
+        optimizedSvg = optimizedSvg.replace(/<svg[^>]*>\s*<\/svg>/gi, '');
+    }
+    
+    // 8.5. 移除未使用的 style 类（在 cleanupIDs 之前）
+    if (activePlugins.has('minifyStyles')) {
+        // 收集所有使用的 class
+        const usedClasses = new Set();
+        const classMatches = optimizedSvg.match(/\s+class\s*=\s*["']([^"']+)["']/gi);
+        if (classMatches) {
+            classMatches.forEach(match => {
+                const classMatch = match.match(/["']([^"']+)["']/);
+                if (classMatch) {
+                    classMatch[1].split(/\s+/).forEach(cls => {
+                        const trimmed = cls.trim();
+                        if (trimmed) usedClasses.add(trimmed);
+                    });
+                }
+            });
+        }
+        
+        // 移除未使用的 CSS 类
+        optimizedSvg = optimizedSvg.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, (match, styleContent) => {
+            let cleaned = styleContent;
+            // 移除未使用的类定义
+            const classDefRegex = /\.([a-zA-Z0-9_-]+)\s*\{[^}]*\}/g;
+            cleaned = cleaned.replace(classDefRegex, (classDef, className) => {
+                if (usedClasses.has(className)) {
+                    return classDef;
+                }
+                return ''; // 移除未使用的类
+            });
+            
+            // 如果 style 标签为空，移除整个 style 标签
+            if (cleaned.trim().length === 0) {
+                return '';
+            }
+            
+            return match.replace(styleContent, cleaned);
+        });
+    }
+
+    // 9. 清理 ID（移除未使用的 ID）
+    if (activePlugins.has('cleanupIDs')) {
+        // 智能实现：只移除未被引用的 ID
+        // 1. 收集所有 ID
+        const idMatches = optimizedSvg.match(/\s+id\s*=\s*["']([^"']+)["']/gi);
+        const allIds = new Set();
+        if (idMatches) {
+            idMatches.forEach(match => {
+                const idMatch = match.match(/["']([^"']+)["']/);
+                if (idMatch) {
+                    allIds.add(idMatch[1]);
+                }
+            });
+        }
+
+        // 2. 收集所有引用的 ID（在 url(#id)、href="#id"、xlink:href="#id" 等中）
+        const referencedIds = new Set();
+        const urlRefs = optimizedSvg.match(/url\(#([^)]+)\)/gi);
+        const hrefRefs = optimizedSvg.match(/(?:href|xlink:href)\s*=\s*["']#([^"']+)["']/gi);
+        const filterRefs = optimizedSvg.match(/filter\s*=\s*["']url\(#([^)]+)\)["']/gi);
+        const fillRefs = optimizedSvg.match(/fill\s*=\s*["']url\(#([^)]+)\)["']/gi);
+        const strokeRefs = optimizedSvg.match(/stroke\s*=\s*["']url\(#([^)]+)\)["']/gi);
+        
+        [urlRefs, hrefRefs, filterRefs, fillRefs, strokeRefs].forEach(refs => {
+            if (refs) {
+                refs.forEach(ref => {
+                    const idMatch = ref.match(/#([^)"']+)/);
+                    if (idMatch) {
+                        referencedIds.add(idMatch[1]);
+                    }
+                });
+            }
+        });
+
+        // 3. 只移除未被引用的 ID
+        allIds.forEach(id => {
+            if (!referencedIds.has(id)) {
+                // 移除这个未使用的 ID
+                const idRegex = new RegExp(`\\s+id\\s*=\\s*["']${id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["']`, 'gi');
+                optimizedSvg = optimizedSvg.replace(idRegex, '');
+            }
+        });
+    }
+
+    // 10. 移除无用的 defs（但保留有引用的内容）
+    if (activePlugins.has('removeUselessDefs')) {
+        // 先检查 defs 中是否有被引用的内容
+        const defsMatches = optimizedSvg.match(/<defs[^>]*>([\s\S]*?)<\/defs>/gi);
+        if (defsMatches) {
+            defsMatches.forEach(defsMatch => {
+                const defsContent = defsMatch.match(/<defs[^>]*>([\s\S]*?)<\/defs>/i);
+                if (defsContent && defsContent[1]) {
+                    // 检查内容中是否有被引用的 ID
+                    const hasReferencedId = /id\s*=\s*["']([^"']+)["']/.test(defsContent[1]);
+                    // 检查这个 ID 是否在 SVG 的其他地方被引用
+                    if (hasReferencedId) {
+                        const idMatch = defsContent[1].match(/id\s*=\s*["']([^"']+)["']/);
+                        if (idMatch) {
+                            const id = idMatch[1];
+                            // 检查这个 ID 是否被引用
+                            const isReferenced = new RegExp(`url\\(#${id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\)`, 'i').test(optimizedSvg);
+                            if (!isReferenced) {
+                                // 如果 defs 中的内容没有被引用，移除整个 defs
+                                optimizedSvg = optimizedSvg.replace(defsMatch, '');
+                            }
+                        }
+                    } else {
+                        // 如果 defs 中没有 ID，检查是否为空
+                        const isEmpty = defsContent[1].trim().length === 0;
+                        if (isEmpty) {
+                            optimizedSvg = optimizedSvg.replace(defsMatch, '');
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // 11. 清理数字值（优化精度）
+    if (activePlugins.has('cleanupNumericValues')) {
+        const floatPrecision = getPluginParams('cleanupNumericValues').floatPrecision || precision;
+        // 优化属性中的数字值
+        optimizedSvg = optimizedSvg.replace(/(\s[a-zA-Z-]+=["'])(\d+\.\d+)(["'])/g, (match, prefix, num, suffix) => {
+            const optimized = parseFloat(num).toFixed(floatPrecision).replace(/\.?0+$/, '');
+            return prefix + optimized + suffix;
+        });
+        // 优化路径中的数字值
+        optimizedSvg = optimizedSvg.replace(/([dDmMlLhHvVcCsSqQtTaAzZ])\s*([-\d.]+)/g, (match, cmd, num) => {
+            if (num.includes('.')) {
+                const optimized = parseFloat(num).toFixed(floatPrecision).replace(/\.?0+$/, '');
+                return cmd + optimized;
+            }
+            return match;
+        });
+    }
+
+    // 12. 优化路径数据
+    if (activePlugins.has('convertPathData')) {
+        const floatPrecision = getPluginParams('convertPathData').floatPrecision || precision;
+        // 优化路径命令中的数字
+        optimizedSvg = optimizedSvg.replace(/([dD])\s*=\s*["']([^"']+)["']/g, (match, cmd, pathData) => {
+            // 优化路径数据中的浮点数
+            let optimized = pathData.replace(/([-\d.]+)/g, (num) => {
+                if (num.includes('.')) {
+                    return parseFloat(num).toFixed(floatPrecision).replace(/\.?0+$/, '');
+                }
+                return num;
+            });
+            
+            // 进一步优化：移除路径命令之间的多余空格
+            // 例如：M 0,300 L 150,180 -> M0,300L150,180
+            optimized = optimized
+                .replace(/([MmLlHhVvCcSsQqTtAaZz])\s+/g, '$1') // 命令后直接跟数字
+                .replace(/\s*,\s*/g, ',') // 压缩逗号周围的空格
+                .replace(/\s+/g, ' ') // 压缩多个空格为单个空格
+                .trim();
+            
+            return cmd + '="' + optimized + '"';
+        });
+    }
+
+    // 13. 移除未使用的命名空间
+    if (activePlugins.has('removeUnusedNS')) {
+        // 简单实现：移除常见的未使用命名空间
+        optimizedSvg = optimizedSvg.replace(/\s+xmlns:[a-z]+="[^"]*"/gi, (match) => {
+            // 检查命名空间是否在内容中被使用
+            const nsMatch = match.match(/xmlns:([a-z]+)="([^"]*)"/i);
+            if (nsMatch) {
+                const nsPrefix = nsMatch[1];
+                const nsRegex = new RegExp(nsPrefix + ':', 'i');
+                if (!nsRegex.test(optimizedSvg.replace(/xmlns:[^=]*="[^"]*"/gi, ''))) {
+                    return '';
+                }
+            }
+            return match;
+        });
+    }
+
+    // 14. 清理属性
+    if (activePlugins.has('cleanupAttrs')) {
+        // 移除多余的空格
+        optimizedSvg = optimizedSvg.replace(/\s+/g, ' ');
+        // 移除标签之间的空格
+        optimizedSvg = optimizedSvg.replace(/>\s+</g, '><');
+        
+        // 移除无效的 transform（如 translate(0,0)）
+        optimizedSvg = optimizedSvg.replace(/\s+transform\s*=\s*["']translate\s*\(\s*0\s*,\s*0\s*\)["']/gi, '');
+        optimizedSvg = optimizedSvg.replace(/\s+transform\s*=\s*["']translate\s*\(\s*0\.0+\s*,\s*0\.0+\s*\)["']/gi, '');
+        
+        // 移除无效的路径（如 M0,0 L0,0）
+        optimizedSvg = optimizedSvg.replace(/<path[^>]*\s+d\s*=\s*["']M\s*0\s*,\s*0\s*L\s*0\s*,\s*0["'][^>]*\/>/gi, '');
+        
+        // 移除默认字体属性
+        optimizedSvg = optimizedSvg.replace(/\s+font-weight\s*=\s*["']normal["']/gi, '');
+        optimizedSvg = optimizedSvg.replace(/\s+font-style\s*=\s*["']normal["']/gi, '');
+        
+        // 移除 fill="none" stroke="none" 的路径（无效路径）
+        optimizedSvg = optimizedSvg.replace(/<path[^>]*\s+fill\s*=\s*["']none["'][^>]*\s+stroke\s*=\s*["']none["'][^>]*\/>/gi, '');
+        
+        // 简化单位（px 可以省略）
+        optimizedSvg = optimizedSvg.replace(/(width|height|font-size|x|y|cx|cy|r|rx|ry)\s*=\s*["'](\d+)\.0+px["']/gi, '$1="$2"');
+        optimizedSvg = optimizedSvg.replace(/(width|height|font-size|x|y|cx|cy|r|rx|ry)\s*=\s*["'](\d+)px["']/gi, '$1="$2"');
+    }
+
+    // 15. 压缩样式（包括内联样式）
+    if (activePlugins.has('minifyStyles')) {
+        // 压缩 <style> 标签中的样式
+        optimizedSvg = optimizedSvg.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, (match, styleContent) => {
+            let minified = styleContent
+                .replace(/\/\*[\s\S]*?\*\//g, '') // 移除注释
+                .replace(/\s+/g, ' ') // 压缩多个空白为单个空格
+                .trim();
+            
+            // 压缩 CSS 规则（更智能的方式）
+            minified = minified
+                .replace(/\s*{\s*/g, '{') // 压缩大括号前的空白
+                .replace(/\s*}\s*/g, '}') // 压缩大括号后的空白
+                .replace(/\s*,\s*/g, ',') // 压缩逗号周围的空白（选择器中的逗号）
+                // 处理属性值：保留必要的空格（如 "0.3s ease", "Arial, sans-serif"）
+                .replace(/:\s*([^;{}]+?)(\s*[;}]|$)/g, (m, value, ending) => {
+                    const trimmedValue = value.trim();
+                    // 如果值包含多个单词（用空格分隔），保留单个空格
+                    // 例如："0.3s ease", "Arial, sans-serif", "12px"
+                    const optimized = trimmedValue.replace(/\s+/g, ' ');
+                    return ':' + optimized + ending;
+                })
+                .replace(/;\s*}/g, '}') // 移除最后一个分号
+                .replace(/;\s+/g, ';') // 压缩分号后的空白
+                .replace(/\s+/g, ' ') // 再次压缩多个空白
+                .trim();
+            
+            return match.replace(styleContent, minified);
+        });
+        
+        // 压缩内联 style 属性
+        optimizedSvg = optimizedSvg.replace(/style\s*=\s*["']([^"']+)["']/gi, (match, styleContent) => {
+            const minified = styleContent
+                .replace(/\s+/g, ' ') // 压缩空白
+                .replace(/:\s+/g, ':') // 压缩冒号
+                .replace(/;\s+/g, ';') // 压缩分号
+                .trim();
+            return `style="${minified}"`;
+        });
+        
+        // 优化：将简单的内联样式转换为属性（提高压缩率）
+        // 例如：style="stop-color:#667eea;stop-opacity:1" -> stop-color="#667eea" stop-opacity="1"
+        optimizedSvg = optimizedSvg.replace(/<(\w+)([^>]*)\s+style\s*=\s*["']([^"']+)["']([^>]*)>/gi, (match, tagName, beforeStyle, styleContent, afterStyle) => {
+            // 只处理简单的样式（不包含复杂选择器或函数）
+            if (!styleContent.includes('(') && !styleContent.includes('url') && styleContent.split(';').length <= 5) {
+                const stylePairs = styleContent.split(';').filter(s => s.trim());
+                const attributes = [];
+                let hasComplexStyle = false;
+                
+                stylePairs.forEach(pair => {
+                    const [key, value] = pair.split(':').map(s => s.trim());
+                    if (key && value) {
+                        // 检查是否是 SVG 标准属性
+                        const svgAttributes = ['fill', 'stroke', 'stroke-width', 'opacity', 'stop-color', 'stop-opacity', 'fill-opacity', 'stroke-opacity'];
+                        if (svgAttributes.includes(key) || key.startsWith('stop-')) {
+                            attributes.push(`${key}="${value}"`);
+                        } else {
+                            hasComplexStyle = true;
+                        }
+                    }
+                });
+                
+                // 如果所有样式都可以转换为属性，则转换
+                if (!hasComplexStyle && attributes.length > 0 && attributes.length === stylePairs.length) {
+                    const newAttributes = beforeStyle + ' ' + attributes.join(' ') + afterStyle;
+                    return `<${tagName}${newAttributes}>`;
+                }
+            }
+            return match;
+        });
+    }
+
+    // 16. 移除 style 元素
+    if (activePlugins.has('removeStyleElement')) {
+        optimizedSvg = optimizedSvg.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
+    }
+
+    // 17. 合并路径（简单实现）
+    if (activePlugins.has('mergePaths')) {
+        // 这个功能比较复杂，简单实现：移除重复的空格和换行
+        optimizedSvg = optimizedSvg.replace(/\s+/g, ' ');
+    }
+
+    // 最终清理：移除多余空白和换行
+    optimizedSvg = optimizedSvg
+        .replace(/>\s+</g, '><') // 移除标签之间的空白
+        .replace(/\s+/g, ' ') // 压缩多个空白为单个空格
+        .replace(/\s*=\s*/g, '=') // 压缩等号周围的空白
+        .replace(/\s*>\s*/g, '>') // 压缩结束标签前的空白
+        .replace(/\s*<\s*/g, '<') // 压缩开始标签后的空白
+        .trim();
+    
+    // 额外优化：移除默认值（如果启用 minifyStyles）
+    if (activePlugins.has('minifyStyles')) {
+        // 移除 opacity="1"（默认值）
+        optimizedSvg = optimizedSvg.replace(/\s+opacity\s*=\s*["']1["']/gi, '');
+        // 移除 stop-opacity="1"（默认值）
+        optimizedSvg = optimizedSvg.replace(/\s+stop-opacity\s*=\s*["']1["']/gi, '');
+        // 移除 fill-opacity="1"（默认值）
+        optimizedSvg = optimizedSvg.replace(/\s+fill-opacity\s*=\s*["']1["']/gi, '');
+        // 移除 stroke-opacity="1"（默认值）
+        optimizedSvg = optimizedSvg.replace(/\s+stroke-opacity\s*=\s*["']1["']/gi, '');
+        
+        // 优化：移除 polygon 和 polyline 中 points 属性的多余空格
+        optimizedSvg = optimizedSvg.replace(/points\s*=\s*["']([^"']+)["']/gi, (match, points) => {
+            const optimized = points.replace(/\s*,\s*/g, ',').replace(/\s+/g, ' ').trim();
+            return `points="${optimized}"`;
+        });
+    }
+    
+    // 优化动画元素的值属性（压缩空格）
+    // 例如：values="1,200;100,200;100,200" -> values="1,200;100,200;100,200"（移除多余空格）
+    optimizedSvg = optimizedSvg.replace(/values\s*=\s*["']([^"']+)["']/gi, (match, values) => {
+        const optimized = values.replace(/\s*;\s*/g, ';').replace(/\s*,\s*/g, ',').replace(/\s+/g, '').trim();
+        return `values="${optimized}"`;
+    });
+    
+    // 优化 from/to 属性（动画变换值）
+    optimizedSvg = optimizedSvg.replace(/(from|to)\s*=\s*["']([^"']+)["']/gi, (match, attr, value) => {
+        const optimized = value.replace(/\s+/g, ' ').trim();
+        return `${attr}="${optimized}"`;
+    });
+    
+    // 优化 SVG 滤镜元素属性（压缩数值）
+    // 例如：stdDeviation="3" -> stdDeviation="3"（如果精度允许，可以进一步优化）
+    // 注意：滤镜值通常需要保持精度，所以这里只压缩空格
+    optimizedSvg = optimizedSvg.replace(/(stdDeviation|dx|dy|slope|k1|k2|k3|k4)\s*=\s*["']([^"']+)["']/gi, (match, attr, value) => {
+        const optimized = value.replace(/\s+/g, '').trim();
+        return `${attr}="${optimized}"`;
+    });
+    
+    // 优化：移除空的 feMergeNode（如果没有任何属性）
+    optimizedSvg = optimizedSvg.replace(/<feMergeNode\s*\/>/gi, '<feMergeNode/>');
+
+    return { data: optimizedSvg };
+}
+
+
+// 格式化字节大小
+function formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+// 显示通知消息
+function showNotification(message, duration = 3000) {
+    notificationText.textContent = message;
+    notification.classList.add('show');
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, duration);
+}
+
+// 将 SVG 字符串转换为 Data URI
+function svgToDataURI(svgString) {
+    const encodedSvg = encodeURIComponent(svgString)
+        .replace(/'/g, '%27') // 避免单引号导致 URI 损坏
+        .replace(/"/g, '%22'); // 避免双引号导致 URI 损坏
+    return `data:image/svg+xml;utf8,${encodedSvg}`;
+}
+
+// --- 核心优化逻辑 ---
+function applyOptimization() {
+    if (!originalSvgString) return;
+
+    const start = performance.now();
+
+    try {
+        // 构造 SVGO 配置对象
+        // SVGO 4.0+ 使用插件数组格式，每个插件是一个对象或字符串
+        const svgoPlugins = [];
+        const precision = currentOptions.precision || 3;
+
+        // 遍历所有选项，构建插件配置
+        for (const key in currentOptions) {
+            if (key === 'precision') continue; // precision 是全局参数
+
+            const isEnabled = currentOptions[key];
+            if (!isEnabled) continue; // 跳过未启用的插件
+
+            // 需要特殊参数的插件
+            if (key === 'convertPathData' || key === 'cleanupNumericValues') {
+                svgoPlugins.push({
+                    name: key,
+                    params: {
+                        floatPrecision: precision,
+                    }
+                });
+            } else {
+                // 其他插件使用默认配置
+                svgoPlugins.push({
+                    name: key
+                });
+            }
+        }
+
+        console.log('SVGO 配置:', { plugins: svgoPlugins, precision });
+
+        // 调用 SVGO 优化
+        // SVGO API: optimize(svgString, config)
+        // 注意：SVGO 3.x 使用 plugins 数组，2.x 可能使用不同的格式
+        const config = {
+            plugins: svgoPlugins,
+            multipass: true, // 多次运行优化器以获得更好的压缩率
+            floatPrecision: precision, // 全局精度设置
+        };
+
+        console.log('调用 SVGO 优化，配置:', config);
+        const result = SVGO_optimize(originalSvgString, config);
+
+        // 处理返回结果（可能是 Promise 或直接结果）
+        if (result && typeof result.then === 'function') {
+            // 异步处理
+            result.then((resolvedResult) => {
+                optimizedSvgString = resolvedResult.data || resolvedResult;
+                const end = performance.now();
+                const processTime = (end - start).toFixed(2);
+                updateUI(processTime);
+            }).catch((error) => {
+                console.error("SVG 优化失败:", error);
+                showNotification("SVG 优化失败: " + (error.message || '未知错误'), 5000);
+                optimizedSvgString = originalSvgString;
+                updateUI(0);
+            });
+            return; // 异步处理，提前返回
+        } else {
+            // 同步处理
+            optimizedSvgString = result.data || result || originalSvgString;
+        }
+    } catch (e) {
+        console.error("SVG 优化失败:", e);
+        showNotification("SVG 优化失败: " + (e.message || '未知错误'), 5000);
+        optimizedSvgString = originalSvgString;
+    }
+
+    const end = performance.now();
+    const processTime = (end - start).toFixed(2);
+    lastProcessTime = parseFloat(processTime);
+    updateUI(processTime);
+}
+
+// SVG 格式化函数（美化输出）
+function formatSVG(svgString) {
+    if (!svgString) return '';
+    
+    let formatted = svgString;
+    let indent = 0;
+    const indentSize = 2; // 缩进空格数
+    
+    // 在标签前后添加换行和缩进
+    formatted = formatted
+        .replace(/></g, '>\n<') // 在标签之间添加换行
+        .split('\n')
+        .map(line => {
+            const trimmed = line.trim();
+            if (!trimmed) return '';
+            
+            // 减少缩进（结束标签）
+            if (trimmed.match(/^<\/[^>]+>/)) {
+                indent = Math.max(0, indent - 1);
+            }
+            
+            const indented = ' '.repeat(indent * indentSize) + trimmed;
+            
+            // 增加缩进（开始标签，但不是自闭合标签）
+            if (trimmed.match(/^<[^/!?][^>]*[^/]>/) && !trimmed.match(/\/>$/)) {
+                indent++;
+            }
+            
+            return indented;
+        })
+        .filter(line => line.trim()) // 移除空行
+        .join('\n');
+    
+    return formatted;
+}
+
+// --- UI 更新函数 ---
+function updateUI(processTime) {
+    if (!originalSvgString || !optimizedSvgString) return;
+
+    // 获取格式化选项
+    const prettyPrint = currentOptions.prettyPrint || false;
+    
+    // 决定显示的代码（格式化或压缩）
+    const displayOptimized = prettyPrint ? formatSVG(optimizedSvgString) : optimizedSvgString;
+    const displayOriginal = prettyPrint ? formatSVG(originalSvgString) : originalSvgString;
+
+    // 计算文件大小（使用实际压缩后的代码，不是格式化的）
+    const originalSize = new Blob([originalSvgString]).size;
+    const optimizedSize = new Blob([optimizedSvgString]).size; // 使用压缩后的实际大小
+    const savedSize = originalSize - optimizedSize;
+    const savedPercent = originalSize > 0 ? ((savedSize / originalSize) * 100).toFixed(1) : 0;
+
+    // 更新统计信息
+    originalSizeSpan.textContent = formatBytes(originalSize);
+    optimizedSizeSpan.textContent = formatBytes(optimizedSize);
+    savedSizeSpan.textContent = `${formatBytes(savedSize)} (${savedPercent}%)`;
+    processTimeSpan.textContent = `${processTime} ms`;
+
+    // 更新预览区域的大小标签
+    originalBadge.textContent = formatBytes(originalSize);
+    optimizedBadge.textContent = formatBytes(optimizedSize);
+
+    // 更新代码编辑器（显示格式化的代码）
+    originalCode.value = displayOriginal;
+    optimizedCode.value = displayOptimized;
+
+    // 更新预览（使用 Data URI 防止 XSS，使用实际压缩后的代码）
+    const originalDataURI = svgToDataURI(originalSvgString);
+    const optimizedDataURI = svgToDataURI(optimizedSvgString);
+
+    originalPreview.innerHTML = `<img src="${originalDataURI}" alt="原始 SVG" />`;
+    optimizedPreview.innerHTML = `<img src="${optimizedDataURI}" alt="优化后 SVG" />`;
+
+    // 显示所有结果区域
+    statsSection.classList.remove('hidden');
+    previewContainer.classList.remove('hidden');
+    codeEditorContainer.classList.remove('hidden');
+    actionButtons.classList.remove('hidden');
+}
+
+// --- 文件加载逻辑 ---
+function loadFile(file) {
+    if (file.type !== 'image/svg+xml') {
+        showNotification('请上传有效的 SVG 文件！');
+        return;
+    }
+
+    // 限制文件大小，例如 5MB
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+    if (file.size > MAX_FILE_SIZE) {
+        showNotification('文件过大，请上传小于 5MB 的 SVG 文件。');
+        return;
+    }
+
+    fileName = file.name;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        originalSvgString = e.target.result;
+        // 隐藏上传区域
+        uploadZone.classList.add('hidden');
+        // 显示预览和统计信息
+        document.body.classList.add('svg-loaded'); // 用于调整布局，如果需要
+        applyOptimization(); // 加载后立即优化
+    };
+    reader.onerror = () => {
+        showNotification('读取文件失败，请重试。');
+    };
+    reader.readAsText(file);
+}
+
+// --- 事件监听器 ---
+
+// 文件拖放
+uploadZone.addEventListener('dragover', (e) => {
+    e.preventDefault(); // 阻止默认行为以允许拖放
+    uploadZone.classList.add('dragover');
+});
+
+uploadZone.addEventListener('dragleave', () => {
+    uploadZone.classList.remove('dragover');
+});
+
+uploadZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadZone.classList.remove('dragover');
+    if (e.dataTransfer.files.length > 0) {
+        loadFile(e.dataTransfer.files[0]);
+    }
+});
+
+// 文件选择
+uploadZone.addEventListener('click', () => {
+    fileInput.click();
+});
+
+fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+        loadFile(e.target.files[0]);
+    }
+});
+
+// 优化选项改变时重新优化
+document.querySelectorAll('.sidebar input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', (e) => {
+        currentOptions[e.target.id] = e.target.checked;
+        // 如果是格式化选项，只更新 UI，不重新优化
+        if (e.target.id === 'prettyPrint') {
+            updateUI(lastProcessTime || 0);
+        } else {
+            applyOptimization();
+        }
+    });
+});
+
+document.getElementById('precision').addEventListener('change', (e) => {
+    let value = parseInt(e.target.value, 10);
+    // 限制精度在合理范围
+    if (isNaN(value) || value < 0) value = 0;
+    if (value > 10) value = 10;
+    e.target.value = value; // 更新 UI
+    currentOptions.precision = value;
+    applyOptimization();
+});
+
+// 重置选项
+resetOptionsBtn.addEventListener('click', () => {
+    currentOptions = { ...defaultPlugins };
+    for (const key in defaultPlugins) {
+        const element = document.getElementById(key);
+        if (element && element.type === 'checkbox') {
+            element.checked = defaultPlugins[key];
+        } else if (element && element.type === 'number') {
+            element.value = defaultPlugins[key];
+        }
+    }
+    applyOptimization();
+    showNotification('优化选项已重置为默认值。');
+});
+
+// 下载按钮
+downloadOptimizedBtn.addEventListener('click', () => {
+    if (!optimizedSvgString) {
+        showNotification('没有可下载的优化 SVG！');
+        return;
+    }
+    const blob = new Blob([optimizedSvgString], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName.replace(/\.svg$/i, '.optimized.svg'); // 保持原始文件名，增加 .optimized
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showNotification('优化后的 SVG 已下载！');
+});
+
+downloadOriginalBtn.addEventListener('click', () => {
+    if (!originalSvgString) {
+        showNotification('没有可下载的原始 SVG！');
+        return;
+    }
+    const blob = new Blob([originalSvgString], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showNotification('原始 SVG 已下载！');
+});
+
+// 复制代码按钮 (使用 Clipboard API)
+copyOptimizedBtn.addEventListener('click', () => {
+    if (optimizedSvgString) {
+        navigator.clipboard.writeText(optimizedSvgString)
+            .then(() => showNotification('优化后的 SVG 代码已复制！'))
+            .catch(err => {
+                console.error('复制失败:', err);
+                showNotification('复制失败，请手动复制。');
+            });
+    } else {
+        showNotification('没有可复制的优化 SVG 代码！');
+    }
+});
+
+copyOriginalBtn.addEventListener('click', () => {
+    if (originalSvgString) {
+        navigator.clipboard.writeText(originalSvgString)
+            .then(() => showNotification('原始 SVG 代码已复制！'))
+            .catch(err => {
+                console.error('复制失败:', err);
+                showNotification('复制失败，请手动复制。');
+            });
+    } else {
+        showNotification('没有可复制的原始 SVG 代码！');
+    }
+});
+
+// 加载新文件
+loadNewBtn.addEventListener('click', () => {
+    originalSvgString = '';
+    optimizedSvgString = '';
+    fileName = 'optimized.svg';
+
+    // 隐藏所有结果区域，显示上传区域
+    uploadZone.classList.remove('hidden');
+    statsSection.classList.add('hidden');
+    previewContainer.classList.add('hidden');
+    codeEditorContainer.classList.add('hidden');
+    actionButtons.classList.add('hidden');
+
+    // 清空预览和代码内容
+    originalPreview.innerHTML = '';
+    optimizedPreview.innerHTML = '';
+    originalCode.value = '';
+    optimizedCode.value = '';
+    fileInput.value = ''; // 清空文件输入框，以便再次选择相同文件
+    document.body.classList.remove('svg-loaded'); // 移除布局调整类
+    showNotification('请选择新的 SVG 文件。');
+});
+
+// 代码编辑器 Tab 切换
+codeTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        codeTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const targetTab = tab.dataset.tab;
+        if (targetTab === 'original') {
+            document.getElementById('originalCode').classList.remove('hidden');
+            document.getElementById('optimizedCode').classList.add('hidden');
+        } else {
+            document.getElementById('originalCode').classList.add('hidden');
+            document.getElementById('optimizedCode').classList.remove('hidden');
+        }
+    });
+});
+
+// 初始化选项的 UI 状态
+function initializeOptionsUI() {
+    for (const key in defaultPlugins) {
+        const element = document.getElementById(key);
+        if (element && element.type === 'checkbox') {
+            element.checked = defaultPlugins[key];
+        } else if (element && element.type === 'number') {
+            element.value = defaultPlugins[key];
+        }
+    }
+}
+
+// 全局变量用于存储处理时间（用于格式化选项切换时）
+let lastProcessTime = 0;
+
+// 页面加载完成后执行
+document.addEventListener('DOMContentLoaded', initializeOptionsUI);
+
+</script>
+</body>
+</html>
